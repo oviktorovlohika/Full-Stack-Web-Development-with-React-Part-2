@@ -1,7 +1,9 @@
 import { Navbar, NavbarBrand } from 'reactstrap';
+import Menu from './components/Menu';
 import './App.css';
 
 function App() {
+
   return (
     <div className="App">
       <Navbar dark color='primary'>
@@ -9,6 +11,7 @@ function App() {
           <NavbarBrand href='/'>Restorane Con Fusion</NavbarBrand>
         </div>
       </Navbar>
+      <Menu />
     </div>
   );
 }
