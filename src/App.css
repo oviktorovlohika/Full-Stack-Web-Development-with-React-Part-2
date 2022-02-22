@@ -78,3 +78,7 @@ address{
 .nav-link {
   margin-right: 10px;
 }
+
+.navbar-nav {
+  list-style-type: none;
+}
