@@ -1,19 +1,15 @@
 import './App.css';
-import { Navbar, NavbarBrand } from 'reactstrap';
-import { initialDishes } from './mocks/dishes';
-import MenuComponent from './components/MenuComponent';
+import Main from './components/Main';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
 
   return (
-    <div className="App">
-      <Navbar dark color='primary'>
-        <div className='container'>
-          <NavbarBrand href='/'>Restorane Con Fusion</NavbarBrand>
-        </div>
-      </Navbar>
-      <MenuComponent initialDishes={initialDishes}/>
-    </div>
+    <Router>
+      <div>
+        <Main />
+      </div>
+    </Router>
   );
 }
 

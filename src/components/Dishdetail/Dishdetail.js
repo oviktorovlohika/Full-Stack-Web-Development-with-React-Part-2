@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap'
 
-const DishdetailComponent = ({ selectDish }) => {
+const Dishdetail = ({ selectedDish }) => {
 
    const renderDish = ({ image, name, description }) => (
       <Card>
@@ -26,18 +26,18 @@ const DishdetailComponent = ({ selectDish }) => {
    )
     
   return (
-     <>
-      {selectDish ? 
+     <div className='container'>
+      {selectedDish ? 
       <div className='row'>
          <div className='col-md-5 m-1'>
-            { renderDish(selectDish) }
+            { renderDish(selectedDish) }
          </div> 
          <div className='col-md-5 m-1'>
-            { renderComments(selectDish) }
+            { renderComments(selectedDish) }
          </div>
       </div> : null}
-     </>
+     </div>
   )
 }
 
-export default DishdetailComponent;
+export default Dishdetail;
