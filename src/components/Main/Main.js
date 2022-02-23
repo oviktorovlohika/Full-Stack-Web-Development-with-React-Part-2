@@ -12,6 +12,7 @@ import Menu from '../Menu';
 import Header from '../Header';
 import Footer from '../Footer';
 import Home from '../Home';
+import About from '../About';
 
 function Main() {
   const [dishes, setDishes] = useState(DISHES);
@@ -23,7 +24,7 @@ function Main() {
   const filteredPromotion = promotions.filter((promo) => promo.featured)[0];
   const filteredLeader = leaders.filter((leader) => leader.featured)[0];
 
-  function ChildDish() {
+  function ChosenDish() {
     const { id } = useParams();
     const dishId = dishes.filter((dish) => dish.id === parseInt(id))[0];
     const commentId = comments.filter((comment) => comment.id === parseInt(id))[0];
@@ -40,8 +41,9 @@ function Main() {
         <Route exact path="/" element = {
           <Home dish={filteredDish} promotion={filteredPromotion} leader={filteredLeader} />}/>
         <Route exact path="/menu" element={<Menu dishes={dishes} />}/>
-        <Route exact path="/contactus" element={Contact} />
-        <Route path='/menu/:id' element={<ChildDish /> } />
+        <Route exact path="/about" element={<About leaders={leaders} />}/>
+        <Route exact path="/contact" element={<Contact />} />
+        <Route path='/menu/:id' element={<ChosenDish /> } />
       </Routes>
       <Footer />
     </>

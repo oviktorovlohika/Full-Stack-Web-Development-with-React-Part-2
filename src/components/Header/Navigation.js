@@ -21,13 +21,13 @@ const Navigation = () => {
                      <Link className="nav-link"  to='/'><span className="fa fa-home fa-lg"></span> Home</Link>
                   </NavItem>
                   <NavItem>
-                     <Link className="nav-link" to='/aboutus'><span className="fa fa-info fa-lg"></span> About Us</Link>
+                     <Link className="nav-link" to='/about'><span className="fa fa-info fa-lg"></span> About Us</Link>
                   </NavItem>
                   <NavItem>
                      <Link className="nav-link"  to='/menu'><span className="fa fa-list fa-lg"></span> Menu</Link>
                   </NavItem>
                   <NavItem>
-                     <Link className="nav-link" to='/contactus'><span className="fa fa-address-card fa-lg"></span> Contact Us</Link>
+                     <Link className="nav-link" to='/contact'><span className="fa fa-address-card fa-lg"></span> Contact Us</Link>
                   </NavItem>
                </Nav>
             </Collapse>

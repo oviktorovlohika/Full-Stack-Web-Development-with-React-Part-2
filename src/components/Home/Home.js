@@ -2,6 +2,7 @@ import React from 'react';
 import RenderCard from '../RenderCard';
 
 function Home(props) {
+  
   return (
    <div className='container'>
       <div className='row'>
