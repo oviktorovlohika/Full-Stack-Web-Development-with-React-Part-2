@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useParams } from 'react-router-dom';
 
 import { DISHES } from '../../mocks/dishes';
 import { LEADERS } from '../../mocks/leaders';
@@ -14,30 +14,34 @@ import Footer from '../Footer';
 import Home from '../Home';
 
 function Main() {
-  // const [dishes, setDishes] = useState(initialDishes);
-  const [selectDish, setSelectDish] = useState(null);
+  const [dishes, setDishes] = useState(DISHES);
   const [comments, setComments] = useState(COMMENTS);
   const [promotions, setPromotions] = useState(PROMOTIONS);
   const [leaders, setLeaders] = useState(LEADERS);
-  const [dishes, setDishes] = useState(DISHES);
 
-  const onDishSelect = (dishId) => {
-    setSelectDish(dishId)
-  }
-
-  const selectedDish = dishes.filter((dish) => dish.id === selectDish)[0];
   const filteredDish = dishes.filter((dish) => dish.featured)[0];
   const filteredPromotion = promotions.filter((promo) => promo.featured)[0];
   const filteredLeader = leaders.filter((leader) => leader.featured)[0];
 
+  function ChildDish() {
+    const { id } = useParams();
+    const dishId = dishes.filter((dish) => dish.id === parseInt(id))[0];
+    const commentId = comments.filter((comment) => comment.id === parseInt(id))[0];
+
+    return (
+      <Dishdetail dish={dishId} comments={commentId}/>
+    )
+  }
+  
   return (  
     <>
       <Header />
       <Routes>
         <Route exact path="/" element = {
           <Home dish={filteredDish} promotion={filteredPromotion} leader={filteredLeader} />}/>
-        <Route exact path="/menu" element={<Menu dishes={dishes} onDishSelect={onDishSelect} />}/>
-        <Route exact path="/contactus" element={<Contact />} />
+        <Route exact path="/menu" element={<Menu dishes={dishes} />}/>
+        <Route exact path="/contactus" element={Contact} />
+        <Route path='/menu/:id' element={<ChildDish /> } />
       </Routes>
       <Footer />
     </>
@@ -45,5 +49,3 @@ function Main() {
 }
 
 export default Main;
-
-// <Dishdetail selectedDish={selectedDish}/>
