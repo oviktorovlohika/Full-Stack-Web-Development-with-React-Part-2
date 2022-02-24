@@ -7,7 +7,7 @@ import { PROMOTIONS } from '../../mocks/promotions';
 import { COMMENTS } from '../../mocks/comments';
 
 import Dishdetail from '../Dishdetail';
-import Contact from '../Contact';
+import Contact from '../Contact/Contact';
 import Menu from '../Menu';
 import Header from '../Header';
 import Footer from '../Footer';
@@ -42,7 +42,7 @@ function Main() {
           <Home dish={filteredDish} promotion={filteredPromotion} leader={filteredLeader} />}/>
         <Route exact path="/menu" element={<Menu dishes={dishes} />}/>
         <Route exact path="/about" element={<About leaders={leaders} />}/>
-        <Route exact path="/contact" element={<Contact />} />
+        <Route exact path="/contact" element={<Contact />}/>
         <Route path='/menu/:id' element={<ChosenDish /> } />
       </Routes>
       <Footer />
