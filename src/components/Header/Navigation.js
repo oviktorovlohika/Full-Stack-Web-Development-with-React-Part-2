@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
-import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem } from 'reactstrap';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Nav, NavItem, Navbar, NavbarBrand, NavbarToggler, Collapse } from 'reactstrap';
+import Modal from './Modal';
 
 const Navigation = () => {
    const [isNavOpen, setIsNavOpen] = useState(false);
 
-   const toggleNav = () => {
-      setIsNavOpen(!isNavOpen);
-   }
+const toggleNav = () => {
+   setIsNavOpen(!isNavOpen);
+}
 
   return (
-   <>
       <Navbar dark expand="md">
          <div className="container">
             <NavbarToggler onClick={toggleNav} />
@@ -30,10 +30,10 @@ const Navigation = () => {
                      <Link className="nav-link" to='/contact'><span className="fa fa-address-card fa-lg"></span> Contact Us</Link>
                   </NavItem>
                </Nav>
+               <Modal />
             </Collapse>
          </div>
       </Navbar>
-   </> 
   )
 }
 

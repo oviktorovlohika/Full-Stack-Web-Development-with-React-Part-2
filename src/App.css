@@ -82,3 +82,7 @@ address{
 .navbar-nav {
   list-style-type: none;
 }
+
+.show { 
+  opacity: 1; 
+}
