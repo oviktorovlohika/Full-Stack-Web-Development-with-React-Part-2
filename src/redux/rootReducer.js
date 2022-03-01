@@ -1,3 +1,5 @@
+import { createStore } from 'redux';
+
 import { DISHES } from '../mocks/dishes';
 import { LEADERS } from '../mocks/leaders';
 import { PROMOTIONS } from '../mocks/promotions';
@@ -13,3 +15,8 @@ export const initialState = {
 export const rootReducer = (state = initialState, action) => {
    return state;
 };
+
+const store = createStore(rootReducer);
+
+export default store;
+
