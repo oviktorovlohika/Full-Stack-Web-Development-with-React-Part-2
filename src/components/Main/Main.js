@@ -42,7 +42,6 @@ function Main(props) {
 }
 
 function mapStateToProps(state) {
-  // console.log('mapStateToProps', state);
   return {
     dishes: state.dishes,
     leaders: state.leaders,
