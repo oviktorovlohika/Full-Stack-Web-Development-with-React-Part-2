@@ -14,18 +14,6 @@ const Dishdetail = ({ dish, comments }) => {
       </Card>
    )
     
-   const renderComments = ({ id, comment, author, date }) => (
-      <>
-         <h4>Comments</h4>
-         <ul className='list-unstyled'>
-            <li key={id}>
-               <p>{comment}</p>
-               <p> -- {author}, {date}</p>
-            </li>
-         </ul>
-      </>
-   )
-    
   return (
      <div className='container'>
       <div className='row'>
@@ -43,8 +31,7 @@ const Dishdetail = ({ dish, comments }) => {
             { renderDish(dish) }
          </div> 
          <div className='col-md-5 m-1'>
-            { renderComments(comments) }
-            <Comments />
+            <Comments comments={comments} />
          </div>
       </div> 
      </div>

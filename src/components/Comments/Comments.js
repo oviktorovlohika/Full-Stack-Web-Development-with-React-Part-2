@@ -14,10 +14,10 @@ import {
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { required, maxLength, minLength } from '../../utils/validators';
 
-const Comments = () => {
+const Comments = ({comments}) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
 
-const toggle = () => {
+   const toggle = () => {
    setIsModalOpen(!isModalOpen);
 }
 
@@ -25,7 +25,21 @@ const handleSubmit = (value) => {
    alert(JSON.stringify(value));
 }
 
-  return (
+const renderComment = (
+   <>
+      <h4>Comments</h4>
+      <ul className='list-unstyled'>
+         <li key={comments.id}>
+            <p>{comments.comment}</p>
+            <p> -- {comments.author}, {comments.date}</p>
+         </li>
+      </ul>
+   </>
+)
+
+return (
+     <>
+      {renderComment}
       <Nav className='ml-auto' navbar>
          <NavItem>
             <Button outline onClick={toggle}><span className='fa fa-pencil fa-lg'></span> Submit Comment </Button>
@@ -87,6 +101,7 @@ const handleSubmit = (value) => {
             </ModalBody>
          </StrapModal> 
       </Nav>
+   </>
   )
 }
 
