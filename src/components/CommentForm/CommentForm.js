@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { Control, LocalForm, Errors } from 'react-redux-form';
 import {
    Label, 
    Nav, 
@@ -11,34 +13,47 @@ import {
    Row,
    Col
 } from 'reactstrap';
-import { Control, LocalForm, Errors } from 'react-redux-form';
 import { required, maxLength, minLength } from '../../utils/validators';
+import { addComments } from '../../redux/actions';
 
-const Comments = ({comments}) => {
+const CommentForm = ({ dishId, comments, addComments }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
+   const [taskText, setTaskText] = useState(comments);
 
    const toggle = () => {
-   setIsModalOpen(!isModalOpen);
-}
+      setIsModalOpen(!isModalOpen);
+   }
 
-const handleSubmit = (value) => {
-   alert(JSON.stringify(value));
-}
+   const toggleSubmit = (value) => {
 
-const renderComment = (
-   <>
-      <h4>Comments</h4>
+      const newComment = [...taskText, {
+         dishId,
+         rating: value.rating,
+         author: value.author,
+         comment: value.comment
+      }
+     ];
+
+      setTaskText(newComment);
+   }
+
+
+   const renderComment = ( 
       <ul className='list-unstyled'>
-         <li key={comments.id}>
-            <p>{comments.comment}</p>
-            <p> -- {comments.author}, {comments.date}</p>
+         {
+            taskText.map((comment)=> (
+         <li key={comment.id}>
+            <p>{comment.comment}</p>
+            <p> -- {comment.author}, {comment.date}</p>
          </li>
+         ))
+         } 
       </ul>
-   </>
-)
+   )
 
-return (
+   return (
      <>
+      <h4>Comments</h4>
       {renderComment}
       <Nav className='ml-auto' navbar>
          <NavItem>
@@ -47,7 +62,7 @@ return (
        <StrapModal isOpen={isModalOpen} toggle={toggle} >
          <ModalHeader toggle={toggle}><h3>Submit Comment</h3> </ModalHeader>
          <ModalBody>
-            <LocalForm onSubmit={(values) => handleSubmit(values)}>
+            <LocalForm onSubmit={(values) => toggleSubmit(values)}>
                <Row className="form-group">
                   <Col md={{size: 2}}>
                      <div className="form-check">
@@ -66,16 +81,16 @@ return (
                   </Col>
                </Row>
                <Row className="form-group">
-                  <Label htmlFor="autor" md={2}>Your Name</Label>
+                  <Label htmlFor="author" md={2}>Your Name</Label>
                   <Col md={10}>
-                     <Control.text model=".autor" id="autor" name="autor"
+                     <Control.text model=".author" id="author" name="author"
                         placeholder="Your Name"
                         className="form-control"
                         validators={{
                            required, minLength: minLength(3), maxLength: maxLength(15)}}/>
                      <Errors
                         className="text-danger"
-                        model=".autor"
+                        model=".author"
                         show="touched"
                         messages={{
                            required: 'Required',
@@ -101,8 +116,12 @@ return (
             </ModalBody>
          </StrapModal> 
       </Nav>
-   </>
-  )
+   </>)
 }
 
-export default Comments;
+const mapDispatchToProps = {
+   addComments
+}
+
+
+export default connect(null, mapDispatchToProps)(CommentForm);

@@ -1,22 +1,15 @@
-import { createStore } from 'redux';
+import { combineReducers } from 'redux';
+import  { commentsReducer } from './commentsReducer';
+import { dishesReducer } from './dishesReducer';
+import { leadersReducer } from './leadersReducer';
+import { promotionsReducer } from './promotionsReducer';
 
-import { DISHES } from '../mocks/dishes';
-import { LEADERS } from '../mocks/leaders';
-import { PROMOTIONS } from '../mocks/promotions';
-import { COMMENTS } from '../mocks/comments';
 
-export const initialState = {
-   dishes: DISHES,
-   leaders: LEADERS,
-   promotion: PROMOTIONS,
-   comments: COMMENTS
-};
+export const rootReducer = combineReducers({
+   dishes: dishesReducer,
+   leaders: leadersReducer,
+   promotions: promotionsReducer,
+   comments: commentsReducer,
+});
 
-export const rootReducer = (state = initialState, action) => {
-   return state;
-};
-
-const store = createStore(rootReducer);
-
-export default store;
 

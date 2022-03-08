@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import Comments from '../Comments/Comments';
+import  CommentForm  from '../CommentForm/CommentForm';
 
 const Dishdetail = ({ dish, comments }) => {
 
@@ -13,7 +13,7 @@ const Dishdetail = ({ dish, comments }) => {
          </CardBody>
       </Card>
    )
-    
+   
   return (
      <div className='container'>
       <div className='row'>
@@ -31,7 +31,7 @@ const Dishdetail = ({ dish, comments }) => {
             { renderDish(dish) }
          </div> 
          <div className='col-md-5 m-1'>
-            <Comments comments={comments} />
+            <CommentForm comments={comments} dishId={dish.id} />
          </div>
       </div> 
      </div>

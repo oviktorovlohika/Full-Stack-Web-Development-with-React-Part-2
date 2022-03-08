@@ -23,7 +23,9 @@ function About({ leaders }) {
   
    const leaderships = leaders.map((leader) => {
       return (
-         <RenderLeader leader={leader}/>
+        <React.Fragment key={leader.id}>
+            <RenderLeader leader={leader}/>
+        </React.Fragment>  
       );
    });
 
@@ -82,7 +84,7 @@ function About({ leaders }) {
                <h2>Corporate Leadership</h2>
            </div>
            <div className='col-12'>
-            <ul class="list-unstyled">
+            <ul className="list-unstyled">
                { leaderships }
             </ul>
            </div>
