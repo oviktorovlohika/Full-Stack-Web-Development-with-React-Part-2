@@ -3,6 +3,7 @@ import  { commentsReducer } from './commentsReducer';
 import { dishesReducer } from './dishesReducer';
 import { leadersReducer } from './leadersReducer';
 import { promotionsReducer } from './promotionsReducer';
+import { addComments } from './actions';
 
 
 export const rootReducer = combineReducers({
@@ -10,6 +11,7 @@ export const rootReducer = combineReducers({
    leaders: leadersReducer,
    promotions: promotionsReducer,
    comments: commentsReducer,
+   addComments,
 });
 
 

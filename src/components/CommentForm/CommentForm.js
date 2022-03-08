@@ -16,32 +16,19 @@ import {
 import { required, maxLength, minLength } from '../../utils/validators';
 import { addComments } from '../../redux/actions';
 
-const CommentForm = ({ dishId, comments, addComments }) => {
+const CommentForm = (props) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
-   const [taskText, setTaskText] = useState(comments);
+   const commentId = props.comments.filter((comment) => comment.dishId === parseInt(props.dishId));
 
    const toggle = () => {
       setIsModalOpen(!isModalOpen);
-   }
-
-   const toggleSubmit = (value) => {
-
-      const newComment = [...taskText, {
-         dishId,
-         rating: value.rating,
-         author: value.author,
-         comment: value.comment
-      }
-     ];
-
-      setTaskText(newComment);
    }
 
 
    const renderComment = ( 
       <ul className='list-unstyled'>
          {
-            taskText.map((comment)=> (
+            commentId.map((comment)=> (
          <li key={comment.id}>
             <p>{comment.comment}</p>
             <p> -- {comment.author}, {comment.date}</p>
@@ -62,7 +49,7 @@ const CommentForm = ({ dishId, comments, addComments }) => {
        <StrapModal isOpen={isModalOpen} toggle={toggle} >
          <ModalHeader toggle={toggle}><h3>Submit Comment</h3> </ModalHeader>
          <ModalBody>
-            <LocalForm onSubmit={(values) => toggleSubmit(values)}>
+            <LocalForm onSubmit={(values) => props.addComments(props.dishId, values.rating, values.author, values.comment)}>
                <Row className="form-group">
                   <Col md={{size: 2}}>
                      <div className="form-check">
@@ -119,9 +106,15 @@ const CommentForm = ({ dishId, comments, addComments }) => {
    </>)
 }
 
+function mapStateToProps(state) {
+   return {
+      comments: state.comments
+    }
+ }
+
 const mapDispatchToProps = {
    addComments
 }
 
 
-export default connect(null, mapDispatchToProps)(CommentForm);
+export default connect(mapStateToProps, mapDispatchToProps)(CommentForm);
