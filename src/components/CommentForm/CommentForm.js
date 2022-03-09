@@ -24,6 +24,7 @@ const CommentForm = (props) => {
       setIsModalOpen(!isModalOpen);
    }
 
+   console.log(props.comments.length)
 
    const renderComment = ( 
       <ul className='list-unstyled'>

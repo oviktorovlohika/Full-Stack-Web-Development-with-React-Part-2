@@ -1,15 +1,18 @@
 import { COMMENTS } from '../mocks/comments';
 import { ADD_COMMENT } from './types';
 
-export const commentsReducer = (state = COMMENTS, {dishId, rating, author, comment, type}) => {
+export const commentsReducer = (state = COMMENTS, { dishId, rating, author, comment, type}) => {
 
+   console.log(state.length)
   switch (type) {
      case ADD_COMMENT: 
      return [...state, {
+        id: state.length,
         dishId,
         rating,
+        comment,
         author,
-        comment
+        date: new Date().toISOString()
      }
     ];
 
