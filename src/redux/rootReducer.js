@@ -5,7 +5,7 @@ import { leadersReducer } from './leadersReducer';
 import { promotionsReducer } from './promotionsReducer';
 import { addComments } from './actions';
 
-
+// console.log('dishesReducer', dishesReducer)
 export const rootReducer = combineReducers({
    dishes: dishesReducer,
    leaders: leadersReducer,

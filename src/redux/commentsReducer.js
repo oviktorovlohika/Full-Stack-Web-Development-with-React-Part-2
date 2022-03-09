@@ -3,7 +3,6 @@ import { ADD_COMMENT } from './types';
 
 export const commentsReducer = (state = COMMENTS, { dishId, rating, author, comment, type}) => {
 
-   console.log(state.length)
   switch (type) {
      case ADD_COMMENT: 
      return [...state, {

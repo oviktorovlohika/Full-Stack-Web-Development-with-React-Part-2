@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import  CommentForm  from '../CommentForm/CommentForm';
+import  CommentForm  from '../CommentForm';
+import  Loading  from '../Loading';
 
-const Dishdetail = ({ dish, comments }) => {
-
+const Dishdetail = ({ dish, isLoading, isErrMess }) => {
+   
    const renderDish = ({ image, name, description }) => (
       <Card>
          <CardImg width="100%" src={image} alt={name} />
@@ -13,8 +14,17 @@ const Dishdetail = ({ dish, comments }) => {
          </CardBody>
       </Card>
    )
-   
+
+   const errrMess = (
+      <div className='container'>
+         <div className='row'>{ isErrMess }</div>
+      </div>  
+   )
+
   return (
+   <>
+     {isLoading && <Loading />}
+     {isErrMess && errrMess}
      <div className='container'>
       <div className='row'>
          <Breadcrumb>
@@ -31,10 +41,11 @@ const Dishdetail = ({ dish, comments }) => {
             { renderDish(dish) }
          </div> 
          <div className='col-md-5 m-1'>
-            <CommentForm comments={comments} dishId={dish.id} />
+            <CommentForm dishId={dish.id} />
          </div>
       </div> 
      </div>
+   </>
   )
 }
 
