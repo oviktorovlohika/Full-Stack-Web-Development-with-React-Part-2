@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Loading() {
+function Loader() {
   return (
     <div className='container'>
       <div className='row'>
@@ -13,4 +13,4 @@ function Loading() {
   )
 }
 
-export default Loading;
+export default Loader;

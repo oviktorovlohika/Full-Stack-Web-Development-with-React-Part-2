@@ -1,11 +1,11 @@
 import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
-import Loading from '../Loading';
+import Loader from '../Loader';
 
 function RenderCard({ item, isLoading, errMess }) {
 
    if(isLoading) {
       return (
-         <Loading />
+         <Loader />
       );
    } else if(errMess) {
       return (

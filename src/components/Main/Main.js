@@ -8,8 +8,9 @@ import Header from '../Header';
 import Footer from '../Footer';
 import Home from '../Home';
 import About from '../About';
-import { addComments, fetchDishes } from '../../redux/actions';
+import { addComments, fetchDishes, fetchPosts } from '../../redux/actions';
 import { useEffect } from 'react';
+
 
 function Main(props) {
   const filteredDish = props.dishes.dishes.filter((dish) => dish.featured)[0];
@@ -41,7 +42,7 @@ function Main(props) {
             dishesLoading={props.dishes.isLoading}
             dishesErrMess={props.dishes.errMess} 
           /> }/>
-        <Route exact path="/menu" element={<Menu dishes={props.dishes} />}/>
+        <Route exact path="/menu" element={<Menu dishes={props.dishes} fetch={props.fetchPosts} />}/>
         <Route exact path="/about" element={<About leaders={props.leaders} />}/>
         <Route exact path="/contact" element={<Contact />}/>
         <Route path='/menu/:id' element={<ChosenDish /> } />
@@ -56,7 +57,8 @@ function mapStateToProps(state) {
     dishes: state.dishes,
     leaders: state.leaders.leaders,
     promotions: state.promotions.promotions,
-    comments: state.comments
+    comments: state.comments,
+    fetchPosts,
   }
 }
 

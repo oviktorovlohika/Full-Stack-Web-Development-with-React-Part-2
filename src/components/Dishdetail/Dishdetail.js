@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import  CommentForm  from '../CommentForm';
-import  Loading  from '../Loading';
 
 const Dishdetail = ({ dish, isLoading, isErrMess }) => {
    
@@ -15,16 +14,8 @@ const Dishdetail = ({ dish, isLoading, isErrMess }) => {
       </Card>
    )
 
-   const errrMess = (
-      <div className='container'>
-         <div className='row'>{ isErrMess }</div>
-      </div>  
-   )
-
   return (
    <>
-     {isLoading && <Loading />}
-     {isErrMess && errrMess}
      <div className='container'>
       <div className='row'>
          <Breadcrumb>

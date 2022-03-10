@@ -1,36 +1,34 @@
 import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import MenuItem from './MenuItem';
-import Loading from '../Loading';
+import Loader from '../Loader';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPosts } from '../../redux/actions';
+import LoadPosts from '../LoadPosts';
 
-const Menu = ({ dishes }) => {
+const Menu = (props) => {
+  const dispatch = useDispatch()
+  const loading = useSelector(state => state.app.isLoading)
+  const posts = useSelector(state => state.posts.fetchedPosts)
 
-  const menu = dishes.dishes.map((dish) => (
+  const menu = props.dishes.dishes.map((dish) => (
     <div key={dish.id} className="col-12 col-md-5 m-1">
-      <MenuItem  dish={dish} />
+      <MenuItem dish={dish} />
     </div>
   ))
 
-  const errrMess = (
-    <div className='container'>
-       <div className='row'>{ dishes.errMess }</div>
-    </div>  
-  )
 
- console.log('isLoading', dishes.isLoading)
- console.log('errMess', dishes.errMess)
+  const loadedPosts = posts.map((post) => (
+    <div key={post.id} className="col-12 col-md-5 m-1">
+      <LoadPosts post={post}/>
+    </div>
+  ))
 
 
-  if(dishes.isLoading) {
-    return (
-       <Loading />
-    );
- } else if(dishes.errMess) {
-    return (
-      errrMess
-    )
- }
- else
+  if(loading) {
+    return <Loader />
+  }
+ 
   return (
    <div className="container">
       <div className='row'>
@@ -44,6 +42,8 @@ const Menu = ({ dishes }) => {
       </div>
       <div className="row">
         {menu}
+          <button onClick={() => dispatch(fetchPosts())} className='btn btn-primary'>download</button>
+          {loadedPosts}
       </div>
    </div>
   )

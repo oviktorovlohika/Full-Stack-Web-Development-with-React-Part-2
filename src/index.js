@@ -12,10 +12,13 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
-const middlewareEnhancer = applyMiddleware(thunk, logger)
-const composedEnhancers = compose(middlewareEnhancer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
-
-const store = createStore(rootReducer, undefined, composedEnhancers)
+const store = createStore(
+  rootReducer,
+  compose(
+    applyMiddleware(thunk, logger), 
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
+  )
 
 const app = (
   <Provider store={store}>
