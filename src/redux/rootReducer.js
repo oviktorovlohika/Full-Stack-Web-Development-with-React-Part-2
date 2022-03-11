@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
+import { createForms } from 'react-redux-form';
 import  { commentsReducer } from './commentsReducer';
 import { dishesReducer, postsReducer } from './dishesReducer';
 import { appReducer } from './appReducer';
 import { leadersReducer } from './leadersReducer';
 import { promotionsReducer } from './promotionsReducer';
 import { addComments } from './actions';
+import { InitialFeedback } from './forms';
 
 export const rootReducer = combineReducers({
    app: appReducer,
@@ -13,7 +15,10 @@ export const rootReducer = combineReducers({
    promotions: promotionsReducer,
    comments: commentsReducer,
    posts: postsReducer,
-   addComments
+   addComments,
+   ...createForms({
+       feedback: InitialFeedback
+   })
 });
 
 

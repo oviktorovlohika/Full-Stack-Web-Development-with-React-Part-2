@@ -1,6 +1,7 @@
 import { Route, Routes, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addComments, fetchPosts } from '../../redux/actions';
+import { actions } from 'react-redux-form';
 
 import Header from '../Header';
 import Footer from '../Footer';
@@ -15,6 +16,7 @@ function Main(props) {
   const filteredPromotion = props.promotions.filter((promo) => promo.featured)[0];
   const filteredLeader = props.leaders.filter((leader) => leader.featured)[0];
 
+  console.log(props.resetFeedbackForm)
   function ChosenDish() {
     const { id } = useParams();
     const dishId = props.dishes.dishes.filter((dish)=> dish.id === parseInt(id))[0];
@@ -32,7 +34,9 @@ function Main(props) {
           <Home dish={filteredDish} promotion={filteredPromotion} leader={props.leaders} /> }/>
         <Route exact path="/menu" element={<Menu dishes={props.dishes} fetch={props.fetchPosts} />}/>
         <Route exact path="/about" element={<About leaders={props.leaders} />}/>
-        <Route exact path="/contact" element={<Contact />}/>
+        <Route exact path="/contact" element={ <Contact resetFeedbackForm={props.resetFeedbackForm} />}/>
+
+        {/* <Route exact path="/contact" element={() => <Contact resetFeedbackForm={props.resetFeedbackForm} />}/> */}
         <Route path='/menu/:id' element={<ChosenDish /> } />
       </Routes>
       <Footer />
@@ -52,6 +56,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => ({
   addComments,
+  resetFeedbackForm: () => {dispatch(actions.reset('feedback'))}
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
