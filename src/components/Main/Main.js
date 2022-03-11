@@ -1,16 +1,14 @@
 import { Route, Routes, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { addComments, fetchPosts } from '../../redux/actions';
 
+import Header from '../Header';
+import Footer from '../Footer';
 import Dishdetail from '../Dishdetail';
 import Contact from '../Contact/Contact';
 import Menu from '../Menu';
-import Header from '../Header';
-import Footer from '../Footer';
 import Home from '../Home';
 import About from '../About';
-import { addComments, fetchDishes, fetchPosts } from '../../redux/actions';
-import { useEffect } from 'react';
-
 
 function Main(props) {
   const filteredDish = props.dishes.dishes.filter((dish) => dish.featured)[0];
@@ -19,29 +17,19 @@ function Main(props) {
 
   function ChosenDish() {
     const { id } = useParams();
-    const dishId = props.dishes.dishes.filter((dish) => dish.id === parseInt(id))[0];
+    const dishId = props.dishes.dishes.filter((dish)=> dish.id === parseInt(id))[0];
 
     return (
-      <Dishdetail dish={dishId} isLoading={props.dishes.isLoading} isErrMess={props.dishes.errMess} />
+      <Dishdetail dish={dishId} />
     )
   };
-
-  useEffect(() => {
-    props.fetchDishes()
-  })
 
   return (  
     <>
       <Header />
       <Routes>
         <Route exact path="/" element = {
-          <Home 
-            dish={filteredDish} 
-            promotion={filteredPromotion} 
-            leader={filteredLeader} 
-            dishesLoading={props.dishes.isLoading}
-            dishesErrMess={props.dishes.errMess} 
-          /> }/>
+          <Home dish={filteredDish} promotion={filteredPromotion} leader={props.leaders} /> }/>
         <Route exact path="/menu" element={<Menu dishes={props.dishes} fetch={props.fetchPosts} />}/>
         <Route exact path="/about" element={<About leaders={props.leaders} />}/>
         <Route exact path="/contact" element={<Contact />}/>
@@ -64,7 +52,6 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => ({
   addComments,
-  fetchDishes: () => {dispatch(fetchDishes)}
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

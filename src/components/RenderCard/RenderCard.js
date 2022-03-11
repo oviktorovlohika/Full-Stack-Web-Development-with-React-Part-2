@@ -1,19 +1,24 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPosts } from '../../redux/actions';
+
 import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
 import Loader from '../Loader';
 
-function RenderCard({ item, isLoading, errMess }) {
 
-   if(isLoading) {
-      return (
-         <Loader />
-      );
-   } else if(errMess) {
-      return (
-         <h4>{errMess}</h4>
-      )
+function RenderCard({ item }) {  
+   const dispatch = useDispatch();
+   const loading = useSelector(state => state.app.isLoading);
+
+  useEffect(() => {
+    dispatch(fetchPosts());
+  },[dispatch]);
+   
+  if(loading) {
+    return <Loader />
    }
-   else
-      return (
+
+   return (
       <Card>
          <CardImg width="100%" src={item.image} alt={item.name} />
          <CardBody>

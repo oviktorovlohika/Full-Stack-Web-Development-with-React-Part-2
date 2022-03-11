@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import MenuItem from './MenuItem';
-import Loader from '../Loader';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts } from '../../redux/actions';
+import { Link } from 'react-router-dom';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+
+import MenuItem from './MenuItem';
+import Loader from '../Loader';
 import LoadPosts from '../LoadPosts';
 
 const Menu = (props) => {
@@ -11,9 +13,13 @@ const Menu = (props) => {
   const loading = useSelector(state => state.app.isLoading)
   const posts = useSelector(state => state.posts.fetchedPosts)
 
+  useEffect(() => {
+    dispatch(fetchPosts());
+  },[dispatch]);
+  
   const menu = props.dishes.dishes.map((dish) => (
     <div key={dish.id} className="col-12 col-md-5 m-1">
-      <MenuItem dish={dish} />
+       <MenuItem dish={dish} />
     </div>
   ))
 
@@ -43,7 +49,7 @@ const Menu = (props) => {
       <div className="row">
         {menu}
           <button onClick={() => dispatch(fetchPosts())} className='btn btn-primary'>download</button>
-          {loadedPosts}
+        {loadedPosts}
       </div>
    </div>
   )

@@ -20,7 +20,6 @@ export const dishesReducer = (state = { isLoading: true,
 };
 
 export const postsReducer = (state = { posts: [], fetchedPosts: []}, action) => {
-
   switch (action.type) {
     case FETCH_DISHES:
       return {...state, fetchedPosts: action.payload}  

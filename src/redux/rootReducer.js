@@ -12,8 +12,8 @@ export const rootReducer = combineReducers({
    leaders: leadersReducer,
    promotions: promotionsReducer,
    comments: commentsReducer,
-   addComments,
-   posts: postsReducer
+   posts: postsReducer,
+   addComments
 });
 
 
