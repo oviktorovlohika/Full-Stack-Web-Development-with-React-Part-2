@@ -6,6 +6,7 @@ import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbIte
 
 import  CommentForm  from '../CommentForm';
 import Loader from '../Loader';
+import { baseUrl } from '../../mocks/baseUrl';
 
 const Dishdetail = ({ dish }) => {
    const dispatch = useDispatch()
@@ -17,7 +18,7 @@ const Dishdetail = ({ dish }) => {
 
    const renderDish = ({ image, name, description }) => (
       <Card>
-         <CardImg width="100%" src={image} alt={name} />
+         <CardImg width="100%" src={baseUrl + image} alt={name} />
          <CardBody>
             <CardTitle><strong>{name}</strong></CardTitle>
             <CardText>{description}</CardText>

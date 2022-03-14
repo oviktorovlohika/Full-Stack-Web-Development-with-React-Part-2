@@ -1,9 +1,10 @@
-import { LEADERS } from '../mocks/leaders';
+import { FETCH_LEADERS } from './types';
 
-const initialState = {
-   leaders: LEADERS,
-}
-
-export const leadersReducer = (state = initialState, action) => {
-   return state
-}
+export const leadersReducer = (state = { leaders: [], fetchedLeaders: []}, action) => {
+   switch (action.type) {
+     case FETCH_LEADERS:
+       return {...state, fetchedLeaders: action.payload}  
+     default:
+       return state;
+   }
+ }

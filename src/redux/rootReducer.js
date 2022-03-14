@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 import { createForms } from 'react-redux-form';
-import  { commentsReducer } from './commentsReducer';
+import { commentsReducer } from './commentsReducer';
 import { dishesReducer, postsReducer } from './dishesReducer';
 import { appReducer } from './appReducer';
 import { leadersReducer } from './leadersReducer';
 import { promotionsReducer } from './promotionsReducer';
-import { addComments } from './actions';
+import { addComments,fetchComments } from './actions';
 import { InitialFeedback } from './forms';
 
 export const rootReducer = combineReducers({
@@ -16,6 +16,7 @@ export const rootReducer = combineReducers({
    comments: commentsReducer,
    posts: postsReducer,
    addComments,
+   fetchComments,
    ...createForms({
        feedback: InitialFeedback
    })

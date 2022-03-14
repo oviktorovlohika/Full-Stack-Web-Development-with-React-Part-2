@@ -6,27 +6,19 @@ import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 import MenuItem from './MenuItem';
 import Loader from '../Loader';
-import LoadPosts from '../LoadPosts';
 
 const Menu = (props) => {
   const dispatch = useDispatch()
   const loading = useSelector(state => state.app.isLoading)
-  const posts = useSelector(state => state.posts.fetchedPosts)
+  const dishes = useSelector(state => state.posts.fetchedPosts) 
 
   useEffect(() => {
     dispatch(fetchPosts());
   },[dispatch]);
   
-  const menu = props.dishes.dishes.map((dish) => (
+  const menu = dishes.map((dish) => (
     <div key={dish.id} className="col-12 col-md-5 m-1">
        <MenuItem dish={dish} />
-    </div>
-  ))
-
-
-  const loadedPosts = posts.map((post) => (
-    <div key={post.id} className="col-12 col-md-5 m-1">
-      <LoadPosts post={post}/>
     </div>
   ))
 
@@ -48,8 +40,6 @@ const Menu = (props) => {
       </div>
       <div className="row">
         {menu}
-          <button onClick={() => dispatch(fetchPosts())} className='btn btn-primary'>download</button>
-        {loadedPosts}
       </div>
    </div>
   )

@@ -1,4 +1,15 @@
-import { ADD_COMMENT, ADD_DISHES, DISHES_FAILED, DISHES_LOADING, FETCH_DISHES, HIDE_LOADER, SHOW_LOADER } from "./types";
+import { 
+   ADD_COMMENT, 
+   ADD_DISHES, 
+   DISHES_FAILED, 
+   DISHES_LOADING, 
+   FETCH_DISHES, 
+   FETCH_LEADERS, 
+   HIDE_LOADER, 
+   SHOW_LOADER ,
+   FETCH_PROMOS
+} from "./types";
+import { baseUrl } from "../mocks/baseUrl";
 
 export const addComments = (dishId, rating, author, comment) => ({
    type: ADD_COMMENT,
@@ -7,14 +18,6 @@ export const addComments = (dishId, rating, author, comment) => ({
    author,
    comment
 });
-
-export const fetchDishes = () => (dispatch) => {
-   dispatch(dishesLoading(true));
-
-   setTimeout(() => {
-      dispatch(addDishes(ADD_DISHES));
-   }, 2000);
-}
 
 export const dishesLoading = () => ({
    type: DISHES_LOADING
@@ -45,11 +48,70 @@ export function hideLoader() {
 export function fetchPosts() {
    return async dispatch => {
       dispatch(showLoader())
-      const response = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5')
+
+      const response = await fetch(baseUrl + 'dishes')
       const json = await response.json()
+
       setTimeout(() => {
          dispatch({type: FETCH_DISHES, payload: json})
       dispatch(hideLoader())
       }, 500);
    }
 }
+
+export const fetchComments = () => (dispatch) => {    
+   return async dispatch => {
+      dispatch(showLoader())
+
+      const response = await fetch(baseUrl + 'dishes')
+      const json = await response.json()
+      
+      setTimeout(() => {
+         dispatch({type: FETCH_DISHES, payload: json})
+      dispatch(hideLoader())
+      }, 500);
+   }
+};
+
+export function fetchDishes() {
+   return async dispatch => {
+      dispatch(showLoader())
+
+      const response = await fetch(baseUrl + 'dishes')
+      const json = await response.json()
+
+      setTimeout(() => {
+         dispatch({type: FETCH_DISHES, payload: json})
+      dispatch(hideLoader())
+      }, 500);
+   }
+}
+
+export function fetchLeaders() {
+   return async dispatch => {
+      dispatch(showLoader())
+
+      const response = await fetch(baseUrl + 'leaders')
+      const json = await response.json()
+
+      setTimeout(() => {
+         dispatch({type: FETCH_LEADERS, payload: json})
+      dispatch(hideLoader())
+      }, 500);
+   }
+}
+
+// export function fetchPromos() {
+//    return async dispatch => {
+//       dispatch(showLoader())
+
+//       const response = await fetch(baseUrl + 'promotions')
+//       const json = await response.json()
+
+//       console.log(json)
+//       setTimeout(() => {
+//          dispatch({type: FETCH_PROMOS, payload: json})
+//       dispatch(hideLoader())
+//       }, 500);
+//    }
+// }

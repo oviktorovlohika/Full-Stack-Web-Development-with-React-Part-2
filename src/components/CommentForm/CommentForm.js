@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import {
@@ -14,15 +15,20 @@ import {
    Col
 } from 'reactstrap';
 import { required, maxLength, minLength } from '../../utils/validators';
-import { addComments } from '../../redux/actions';
+import { addComments, fetchComments } from '../../redux/actions';
 
 const CommentForm = (props) => {
+   const dispatch = useDispatch()
    const [isModalOpen, setIsModalOpen] = useState(false);
    const commentId = props.comments.filter((comment) => comment.dishId === parseInt(props.dishId));
 
    const toggle = () => {
       setIsModalOpen(!isModalOpen);
    }
+   
+   useEffect(() => {
+      dispatch(fetchComments());
+    },[dispatch]);
 
    const renderComment = ( 
       <ul className='list-unstyled'>
@@ -95,7 +101,7 @@ const CommentForm = (props) => {
                 </Row>        
                   <Row className="form-group">
                      <Col md={{size:10, offset: 2}}>
-                        <Button type="submit" color="primary">Submit</Button>
+                        <Button type="submit" color="primary" onClick={toggle}>Submit</Button>
                       </Col>
                   </Row>
                 </LocalForm>
@@ -112,7 +118,8 @@ function mapStateToProps(state) {
  }
 
 const mapDispatchToProps = {
-   addComments
+   addComments,
+   fetchComments
 }
 
 

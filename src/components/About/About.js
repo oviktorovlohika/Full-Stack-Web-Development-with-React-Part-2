@@ -1,12 +1,15 @@
-import React from 'react'; 
+import React, { useEffect }  from 'react'; 
+import { useDispatch, useSelector } from 'react-redux';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { fetchLeaders } from '../../redux/actions';
+import { baseUrl } from '../../mocks/baseUrl';
 
 function RenderLeader({ leader }) {
    return (
        <Media tag="li">
            <Media top middle>
-               <Media object src={leader.image} alt={leader.name}/>
+               <Media object src={baseUrl + leader.image} alt={leader.name}/>
            </Media>
            <Media body className="col-12">
                <Media heading>
@@ -19,8 +22,14 @@ function RenderLeader({ leader }) {
    );
 } 
 
-function About({ leaders }) {
-  
+function About(props) {
+    const dispatch = useDispatch();
+    const leaders = useSelector(state => state.leaders.fetchedLeaders);
+
+    useEffect(() => {
+        dispatch(fetchLeaders());
+    },[dispatch]);
+
    const leaderships = leaders.map((leader) => {
       return (
         <React.Fragment key={leader.id}>
