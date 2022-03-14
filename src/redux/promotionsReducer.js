@@ -1,19 +1,19 @@
-import { PROMOTIONS } from '../mocks/promotions';
-import { FETCH_PROMOS } from './types';
+import { ADD_PROMOS, PROMOS_LOADING, PROMOS_FAILED } from './types';
 
-const initialState = {
-   promotions: PROMOTIONS,
+ export const Promotions = (state  = { isLoading: true,
+   errMess: null,
+   promotions:[]}, action) => {
+   switch (action.type) {
+      case ADD_PROMOS:
+         return {...state, isLoading: false, errMess: null, promotions: action.payload};
+
+      case PROMOS_LOADING:
+return {...state, isLoading: true, errMess: null, promotions: []}
+
+case PROMOS_FAILED:
+return {...state, isLoading: false, errMess: action.payload};
+
+default:
+return state;
 }
-
-export const promotionsReducer = (state = initialState, action) => {
-   return state
-}
-
-// export const promotionsReducer = (state = { promotions: [], fetchedpromo: []}, action) => {
-//    switch (action.type) {
-//      case FETCH_PROMOS:
-//        return {...state, fetchedpromo: action.payload}  
-//      default:
-//        return state;
-//    }
-//  }
+};

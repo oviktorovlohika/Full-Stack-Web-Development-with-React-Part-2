@@ -7,7 +7,7 @@ import {
    FETCH_LEADERS, 
    HIDE_LOADER, 
    SHOW_LOADER ,
-   FETCH_PROMOS
+   ADD_PROMOS
 } from "./types";
 import { baseUrl } from "../mocks/baseUrl";
 
@@ -101,17 +101,14 @@ export function fetchLeaders() {
    }
 }
 
-// export function fetchPromos() {
-//    return async dispatch => {
-//       dispatch(showLoader())
+export const addPromos = (promos) => ({
+   type: ADD_PROMOS,
+   payload: promos
+});
 
-//       const response = await fetch(baseUrl + 'promotions')
-//       const json = await response.json()
+export const fetchPromos = () => (dispatch) => {
 
-//       console.log(json)
-//       setTimeout(() => {
-//          dispatch({type: FETCH_PROMOS, payload: json})
-//       dispatch(hideLoader())
-//       }, 500);
-//    }
-// }
+   return fetch(baseUrl + 'promotions')
+   .then(response => response.json())
+   .then(promos => dispatch(addPromos(promos)));
+}

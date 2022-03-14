@@ -19,6 +19,9 @@ function HomePage(props) {
          <div className='col-12 col-md-3 m-1'>
             <RenderCard item={props.leaders} />
          </div>
+         <div className='col-12 col-md-3 m-1'>
+            <RenderCard item={props.promotions} />
+         </div>
       </div>
    </div>
   )
