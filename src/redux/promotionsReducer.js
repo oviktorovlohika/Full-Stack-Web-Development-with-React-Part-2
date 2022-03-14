@@ -1,19 +1,13 @@
-import { ADD_PROMOS, PROMOS_LOADING, PROMOS_FAILED } from './types';
+import { FETCH_PROMOS, PROMOS_FAILED } from './types';
 
- export const Promotions = (state  = { isLoading: true,
-   errMess: null,
-   promotions:[]}, action) => {
+export const promosReducer = (state = { promos: [], fetchedPromos: [], errMess: null}, action) => {
    switch (action.type) {
-      case ADD_PROMOS:
-         return {...state, isLoading: false, errMess: null, promotions: action.payload};
+     case FETCH_PROMOS:
+       return {...state, fetchedPromos: action.payload}  
+      case PROMOS_FAILED: 
+      return {...state, errMess: action.payload}
+     default:
+       return state;
+   }
+ }
 
-      case PROMOS_LOADING:
-return {...state, isLoading: true, errMess: null, promotions: []}
-
-case PROMOS_FAILED:
-return {...state, isLoading: false, errMess: action.payload};
-
-default:
-return state;
-}
-};

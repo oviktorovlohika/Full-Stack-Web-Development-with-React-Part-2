@@ -6,7 +6,7 @@ import {
   fetchComments, 
   fetchDishes, 
   fetchLeaders, 
-  fetchPromos 
+  fetchPromos,
 } from '../../redux/actions';
 import { actions } from 'react-redux-form';
 import { useEffect } from 'react';
@@ -24,9 +24,7 @@ function Main(props) {
   const dispatch = useDispatch();
   const leaders = useSelector(state => state.leaders.fetchedLeaders);
   const dishes = useSelector(state => state.posts.fetchedPosts);
-
-  const filteredDish = dishes?.filter((dish) => dish.featured)[0];
-  const filteredLeader = leaders?.filter((leader) => leader.featured)[0];
+  const promotions = useSelector(state => state.promotions.fetchedPromos);
 
   useEffect(() => {
     dispatch(fetchLeaders());
@@ -34,6 +32,10 @@ function Main(props) {
     dispatch(fetchPromos());
  },[dispatch]);
 
+ const filteredDish = dishes.filter((dish) => dish.featured)[0];
+ const filteredLeader = leaders.filter((leader) => leader.featured)[0];
+ const filteredPromotion = promotions.filter((promo) => promo.featured)[0];
+ 
   return (  
     <>
       <Header />
@@ -42,7 +44,7 @@ function Main(props) {
           <HomePage 
                 dishes={filteredDish} 
                 leaders={filteredLeader}
-                promotions={props.promotions.filter((promo) => promo.featured)[0]}
+                promotions={filteredPromotion}
                 fetchLeaders={props.fetchLeaders}
             /> }/>
         <Route exact path="/menu" element={
@@ -73,14 +75,13 @@ function mapStateToProps(state) {
     fetchPosts,
     fetchDishes,
     fetchComments,
-    fetchLeaders
+    fetchLeaders,
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
   addComments,
   resetFeedbackForm: () => {dispatch(actions.reset('feedback'))},
-  fetchPromos: () => dispatch(fetchPromos())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

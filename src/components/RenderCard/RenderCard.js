@@ -10,7 +10,7 @@ function RenderCard({ item }) {
   if(loading) {
     return <Loader />
    }
- 
+   
    return (
       <Card>
          <CardImg width="100%" src={baseUrl + item.image} alt={item.name} />

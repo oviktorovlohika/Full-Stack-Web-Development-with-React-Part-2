@@ -7,7 +7,10 @@ import {
    FETCH_LEADERS, 
    HIDE_LOADER, 
    SHOW_LOADER ,
-   ADD_PROMOS
+   ADD_PROMOS,
+   FETCH_PROMOS,
+   PROMOS_FAILED,
+   FETCH_COMMENTS
 } from "./types";
 import { baseUrl } from "../mocks/baseUrl";
 
@@ -45,47 +48,75 @@ export function hideLoader() {
    }
 }
 
-export function fetchPosts() {
-   return async dispatch => {
-      dispatch(showLoader())
+export const addPromos = (promos) => ({
+   type: ADD_PROMOS,
+   payload: promos
+});
 
-      const response = await fetch(baseUrl + 'dishes')
-      const json = await response.json()
+export const promosFailed = (errmess) => ({
+   type: PROMOS_FAILED,
+   payload: errmess
+});
 
-      setTimeout(() => {
-         dispatch({type: FETCH_DISHES, payload: json})
-      dispatch(hideLoader())
-      }, 500);
-   }
+export const fetchDishes = () => (dispatch) => {   
+   return fetch(baseUrl + 'dishes')
+   .then(response => {
+       if (response.ok) {
+         return response;
+       } else {
+         var error = new Error('Error ' + response.status + ': ' + response.statusText);
+         error.response = response;
+         throw error;
+       }
+     },
+     error => {
+           var errmess = new Error(error.message);
+           throw errmess;
+     })
+   .then(response => response.json())
+   .then(dish => dispatch({type: FETCH_DISHES, payload: dish}))
+   .catch(error => dispatch(dishesFailed(error.message)));
 }
 
-export const fetchComments = () => (dispatch) => {    
-   return async dispatch => {
-      dispatch(showLoader())
-
-      const response = await fetch(baseUrl + 'dishes')
-      const json = await response.json()
-      
-      setTimeout(() => {
-         dispatch({type: FETCH_DISHES, payload: json})
-      dispatch(hideLoader())
-      }, 500);
-   }
+export const fetchPromos = () => (dispatch) => {    
+   return fetch(baseUrl + 'promotions')
+   .then(response => {
+       if (response.ok) {
+         return response;
+       } else {
+         var error = new Error('Error ' + response.status + ': ' + response.statusText);
+         error.response = response;
+         throw error;
+       }
+     },
+     error => {
+           var errmess = new Error(error.message);
+           throw errmess;
+     })
+   .then(response => response.json())
+   .then(promos => dispatch({type: FETCH_PROMOS, payload: promos}))
+   .catch(error => dispatch(promosFailed(error.message)));
 };
 
-export function fetchDishes() {
-   return async dispatch => {
-      dispatch(showLoader())
-
-      const response = await fetch(baseUrl + 'dishes')
-      const json = await response.json()
-
-      setTimeout(() => {
-         dispatch({type: FETCH_DISHES, payload: json})
-      dispatch(hideLoader())
-      }, 500);
-   }
-}
+export const fetchComments = () => (dispatch) => {    
+   return fetch(baseUrl + 'comments')
+   .then(response => {
+       if (response.ok) {
+         return response;
+       } else {
+         var error = new Error('Error ' + response.status + ': ' + response.statusText);
+         error.response = response;
+         throw error;
+       }
+     },
+     error => {
+           var errmess = new Error(error.message);
+           throw errmess;
+     })
+   .then(response => response.json())
+   .then(comment => dispatch({type: FETCH_COMMENTS, payload: comment}))
+   .catch(error => dispatch(promosFailed(error.message)));
+};
 
 export function fetchLeaders() {
    return async dispatch => {
@@ -101,14 +132,16 @@ export function fetchLeaders() {
    }
 }
 
-export const addPromos = (promos) => ({
-   type: ADD_PROMOS,
-   payload: promos
-});
+export function fetchPosts() {
+   return async dispatch => {
+      dispatch(showLoader())
 
-export const fetchPromos = () => (dispatch) => {
+      const response = await fetch(baseUrl + 'dishes')
+      const json = await response.json()
 
-   return fetch(baseUrl + 'promotions')
-   .then(response => response.json())
-   .then(promos => dispatch(addPromos(promos)));
+      setTimeout(() => {
+         dispatch({type: FETCH_DISHES, payload: json})
+      dispatch(hideLoader())
+      }, 500);
+   }
 }

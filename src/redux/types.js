@@ -15,4 +15,5 @@ export const PROMOS_FAILED = 'PROMOS_FAILED';
 
 export const FETCH_DISHES = 'FETCH_DISHES';
 export const FETCH_LEADERS = 'FETCH_LEADERS';
-export const FETCH_PROMOS = 'FETCH_PROMO';
+export const FETCH_PROMOS = 'FETCH_PROMOS';
+export const FETCH_COMMENTS = 'FETCH_COMMENTS';
