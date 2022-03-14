@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts } from '../../redux/actions';
 import { Link } from 'react-router-dom';
 import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { FadeTransform } from 'react-animation-components';
 
 import  CommentForm  from '../CommentForm';
 import Loader from '../Loader';
@@ -17,6 +18,11 @@ const Dishdetail = ({ dish }) => {
    },[dispatch]);
 
    const renderDish = ({ image, name, description }) => (
+      <FadeTransform
+      in
+      transformProps={{
+         exitTransform: 'scale(0.5) translateY(-50%)'
+      }}>
       <Card>
          <CardImg width="100%" src={baseUrl + image} alt={name} />
          <CardBody>
@@ -24,6 +30,7 @@ const Dishdetail = ({ dish }) => {
             <CardText>{description}</CardText>
          </CardBody>
       </Card>
+      </FadeTransform>
    )
 
    if(loading) {

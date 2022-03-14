@@ -16,6 +16,7 @@ import {
 } from 'reactstrap';
 import { required, maxLength, minLength } from '../../utils/validators';
 import { addComments, fetchComments } from '../../redux/actions';
+import { Fade, Stagger } from 'react-animation-components';
 
 const CommentForm = (props) => {
    const dispatch = useDispatch()
@@ -32,14 +33,18 @@ const CommentForm = (props) => {
 
    const renderComment = ( 
       <ul className='list-unstyled'>
+        <Stagger in>
          {
             commentId.map((comment)=> (
-         <li key={comment.id}>
+         <Fade in>
+            <li key={comment.id}>
             <p>{comment.comment}</p>
             <p> -- {comment.author}, {comment.date}</p>
-         </li>
+            </li>
+         </Fade>
          ))
          } 
+         </Stagger>
       </ul>
    )
 
