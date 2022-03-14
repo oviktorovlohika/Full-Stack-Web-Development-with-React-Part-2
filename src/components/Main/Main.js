@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { 
   addComments, 
@@ -11,6 +11,7 @@ import {
 import { actions } from 'react-redux-form';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import {CSSTransition, SwitchTransition} from "react-transition-group";
 
 import Header from '../Header';
 import Footer from '../Footer';
@@ -21,6 +22,7 @@ import About from '../About';
 import ChosenDish from '../ChosenDish';
 
 function Main(props) {
+  const location = useLocation()
   const dispatch = useDispatch();
   const leaders = useSelector(state => state.leaders.fetchedLeaders);
   const dishes = useSelector(state => state.posts.fetchedPosts);
@@ -36,32 +38,33 @@ function Main(props) {
  const filteredLeader = leaders.filter((leader) => leader.featured)[0];
  const filteredPromotion = promotions.filter((promo) => promo.featured)[0];
  
-  return (  
-    <>
-      <Header />
-      <Routes>
-        <Route exact path="/" element = {
-          <HomePage 
+return ( 
+      <>
+        <Header />
+        <SwitchTransition>
+        <CSSTransition classNames="page" timeout={300} key={location.key}>
+          <Routes location={location}>
+            <Route exact path="/" element = {
+              <HomePage 
                 dishes={filteredDish} 
                 leaders={filteredLeader}
                 promotions={filteredPromotion}
                 fetchLeaders={props.fetchLeaders}
-            /> }/>
-        <Route exact path="/menu" element={
-          <Menu 
-            dishes={props.dishes} 
-            fetch={props.fetchPosts} 
-            fetchDishes={props.fetchDishes}  
-            />} />
-        <Route exact path="/about" element={
-          <About 
-            leaders={props.leaders} 
-            fetchLeaders={props.fetchLeaders}
-          />}/>
-        <Route exact path="/contact" element={ <Contact resetFeedbackForm={props.resetFeedbackForm} />}/>
-        <Route path='/menu/:id' element={<ChosenDish fetchDishes={props.fetchDishes} /> } />
-      </Routes>
-      <Footer />
+              /> }/>
+            <Route exact path="/menu" element={
+              <Menu 
+                dishes={props.dishes} 
+                fetch={props.fetchPosts} 
+                fetchDishes={props.fetchDishes}  
+              />} />
+            <Route exact path="/about" element={
+            <About leaders={props.leaders} fetchLeaders={props.fetchLeaders}/>}/>
+            <Route exact path="/contact" element={ <Contact resetFeedbackForm={props.resetFeedbackForm} />}/>
+            <Route path='/menu/:id' element={<ChosenDish fetchDishes={props.fetchDishes} /> } />
+          </Routes>
+        </CSSTransition>
+        </SwitchTransition>
+        <Footer />
     </>
   );
 }
