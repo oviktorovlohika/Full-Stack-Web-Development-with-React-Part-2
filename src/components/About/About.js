@@ -4,9 +4,12 @@ import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'r
 import { Link } from 'react-router-dom';
 import { fetchLeaders } from '../../redux/actions';
 import { baseUrl } from '../../mocks/baseUrl';
+import Loader from '../Loader';
+import { Fade, Stagger } from 'react-animation-components';
 
 function RenderLeader({ leader }) {
    return (
+    <Fade in>
        <Media tag="li">
            <Media top middle>
                <Media object src={baseUrl + leader.image} alt={leader.name}/>
@@ -19,12 +22,14 @@ function RenderLeader({ leader }) {
                <p>{leader.description}</p>
            </Media>
        </Media>
+    </Fade>
    );
 } 
 
 function About(props) {
     const dispatch = useDispatch();
     const leaders = useSelector(state => state.leaders.fetchedLeaders);
+    const loading = useSelector(state => state.app.isLoading);
 
     useEffect(() => {
         dispatch(fetchLeaders());
@@ -32,12 +37,15 @@ function About(props) {
 
    const leaderships = leaders.map((leader) => {
       return (
-        <React.Fragment key={leader.id}>
-            <RenderLeader leader={leader}/>
-        </React.Fragment>  
+        <Stagger in>
+             <React.Fragment key={leader.id}>
+                <RenderLeader leader={leader}/>
+            </React.Fragment> 
+        </Stagger>
       );
    });
 
+ 
   return (
    <div className="container">
        <div className="row">
@@ -94,7 +102,7 @@ function About(props) {
            </div>
            <div className='col-12'>
             <ul className="list-unstyled">
-               { leaderships }
+               {loading ? <Loader/> : leaderships }
             </ul>
            </div>
        </div>

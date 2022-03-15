@@ -17,10 +17,10 @@ function HomePage(props) {
             <RenderCard item={props.dishes} />
          </div>
          <div className='col-12 col-md-3 m-1'>
-            <RenderCard item={props.leaders} />
+            <RenderCard item={props.promotions} />
          </div>
          <div className='col-12 col-md-3 m-1'>
-            <RenderCard item={props.promotions} />
+            <RenderCard item={props.leaders} />
          </div>
       </div>
    </div>

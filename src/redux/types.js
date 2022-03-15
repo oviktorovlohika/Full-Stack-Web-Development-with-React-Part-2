@@ -2,6 +2,7 @@ export const ADD_COMMENT = 'ADD_COMMENT';
 export const ADD_DISHES = 'ADD_DISHES';
 export const ADD_COMMENTS = 'ADD_COMMENTS';
 export const ADD_PROMOS = 'ADD_PROMOS';
+export const ADD_FEEDBACK = 'FETCH_FEEDBACK';
 
 export const SHOW_LOADER = 'SHOW_LOADER';
 export const HIDE_LOADER = 'HIDE_LOADER';
@@ -17,3 +18,4 @@ export const FETCH_DISHES = 'FETCH_DISHES';
 export const FETCH_LEADERS = 'FETCH_LEADERS';
 export const FETCH_PROMOS = 'FETCH_PROMOS';
 export const FETCH_COMMENTS = 'FETCH_COMMENTS';
+export const FETCH_FEEDBACK = 'FETCH_FEEDBACK';

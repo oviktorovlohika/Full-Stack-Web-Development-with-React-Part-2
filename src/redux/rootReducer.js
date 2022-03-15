@@ -7,6 +7,7 @@ import { leadersReducer } from './leadersReducer';
 import { promosReducer } from './promotionsReducer';
 import { addComments,fetchComments } from './actions';
 import { InitialFeedback } from './forms';
+import { feedbackReducer } from './feedbackReducer';
 
 export const rootReducer = combineReducers({
    app: appReducer,
@@ -15,6 +16,7 @@ export const rootReducer = combineReducers({
    leaders: leadersReducer,
    comments: commentsReducer,
    posts: postsReducer,
+   feedback: feedbackReducer,
    addComments,
    fetchComments,
    ...createForms({

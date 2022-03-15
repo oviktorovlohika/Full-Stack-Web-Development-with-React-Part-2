@@ -7,6 +7,7 @@ import {
   fetchDishes, 
   fetchLeaders, 
   fetchPromos,
+  postFeedback
 } from '../../redux/actions';
 import { actions } from 'react-redux-form';
 import { useEffect } from 'react';
@@ -37,8 +38,8 @@ function Main(props) {
  const filteredDish = dishes.filter((dish) => dish.featured)[0];
  const filteredLeader = leaders.filter((leader) => leader.featured)[0];
  const filteredPromotion = promotions.filter((promo) => promo.featured)[0];
- 
-return ( 
+
+ return ( 
       <>
         <Header />
         <SwitchTransition>
@@ -59,7 +60,7 @@ return (
               />} />
             <Route exact path="/about" element={
             <About leaders={props.leaders} fetchLeaders={props.fetchLeaders}/>}/>
-            <Route exact path="/contact" element={ <Contact resetFeedbackForm={props.resetFeedbackForm} />}/>
+            <Route exact path="/contact" element={ <Contact resetFeedbackForm={props.resetFeedbackForm} postFeedback={props.postFeedback}/>}/>
             <Route path='/menu/:id' element={<ChosenDish fetchDishes={props.fetchDishes} /> } />
           </Routes>
         </CSSTransition>
@@ -75,6 +76,7 @@ function mapStateToProps(state) {
     leaders: state.leaders.leaders,
     promotions: state.promotions.promotions,
     comments: state.comments,
+    feedback: state.feedback,
     fetchPosts,
     fetchDishes,
     fetchComments,
@@ -84,6 +86,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => ({
   addComments,
+  postFeedback,
   resetFeedbackForm: () => {dispatch(actions.reset('feedback'))},
 })
 

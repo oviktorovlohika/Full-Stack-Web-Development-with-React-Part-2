@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Control, Form, Errors } from 'react-redux-form';
-
 import { 
    Breadcrumb, 
    BreadcrumbItem, 
@@ -22,7 +21,7 @@ class Contact extends Component {
    }
 
    handleSubmit(value) {
-      console.log(JSON.stringify(value));
+      this.props.postFeedback(value);
       alert(JSON.stringify(value));
       this.props.resetFeedbackForm();
    }

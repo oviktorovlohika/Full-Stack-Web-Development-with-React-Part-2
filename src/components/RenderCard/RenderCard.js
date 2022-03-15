@@ -26,7 +26,7 @@ function RenderCard({ item }) {
           <CardText>{item.description}</CardText>
           </CardBody>
       </Card>
-  </FadeTransform>
+   </FadeTransform>
    )
 }
 
