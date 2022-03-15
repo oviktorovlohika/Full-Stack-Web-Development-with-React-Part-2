@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import {
@@ -15,43 +14,19 @@ import {
    Col
 } from 'reactstrap';
 import { required, maxLength, minLength } from '../../utils/validators';
-import { addComments, fetchComments } from '../../redux/actions';
-import { Fade, Stagger } from 'react-animation-components';
+import { postComment, fetchComments, addComments } from '../../redux/actions';
 
 const CommentForm = (props) => {
-   const dispatch = useDispatch()
    const [isModalOpen, setIsModalOpen] = useState(false);
-   const commentId = props.comments.filter((comment) => comment.dishId === parseInt(props.dishId));
 
    const toggle = () => {
       setIsModalOpen(!isModalOpen);
    }
-   
-   useEffect(() => {
-      dispatch(fetchComments());
-    },[dispatch]);
-
-   const renderComment = ( 
-      <ul className='list-unstyled'>
-        <Stagger in>
-         {
-            commentId.map((comment)=> (
-         <Fade in>
-            <li key={comment.id}>
-            <p>{comment.comment}</p>
-            <p> -- {comment.author}, {comment.date}</p>
-            </li>
-         </Fade>
-         ))
-         } 
-         </Stagger>
-      </ul>
-   )
 
    return (
      <>
       <h4>Comments</h4>
-      {renderComment}
+      {props.renderComment}
       <Nav className='ml-auto' navbar>
          <NavItem>
             <Button outline onClick={toggle}><span className='fa fa-pencil fa-lg'></span> Submit Comment </Button>
@@ -59,7 +34,7 @@ const CommentForm = (props) => {
        <StrapModal isOpen={isModalOpen} toggle={toggle} >
          <ModalHeader toggle={toggle}><h3>Submit Comment</h3> </ModalHeader>
          <ModalBody>
-            <LocalForm onSubmit={(values) => props.addComments(props.dishId, values.rating, values.author, values.comment)}>
+            <LocalForm onSubmit={(values) => props.postComment(props.dishId, values.rating, values.author, values.comment)}>
                <Row className="form-group">
                   <Col md={{size: 2}}>
                      <div className="form-check">
@@ -118,13 +93,15 @@ const CommentForm = (props) => {
 
 function mapStateToProps(state) {
    return {
-      comments: state.comments
+      comments: state.comments,
+      addComments,
     }
  }
 
 const mapDispatchToProps = {
+   postComment,
+   fetchComments,
    addComments,
-   fetchComments
 }
 
 

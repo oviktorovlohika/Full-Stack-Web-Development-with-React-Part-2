@@ -3,16 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts } from '../../redux/actions';
 import { Link } from 'react-router-dom';
 import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import { FadeTransform } from 'react-animation-components';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 import  CommentForm  from '../CommentForm';
 import Loader from '../Loader';
 import { baseUrl } from '../../mocks/baseUrl';
 
-const Dishdetail = ({ dish }) => {
+const Dishdetail = ({ dish, comments }) => {
    const dispatch = useDispatch()
    const loading = useSelector(state => state.app.isLoading)
- 
+   const commentId = comments.filter((comment) => comment.dishId === parseInt(dish.id));
+
    useEffect(() => {
      dispatch(fetchPosts());
    },[dispatch]);
@@ -33,11 +34,28 @@ const Dishdetail = ({ dish }) => {
       </FadeTransform>
    )
 
+   const renderComment = ( 
+      <ul className='list-unstyled'>
+        <Stagger in>
+         {
+            commentId.map((comment)=> (
+         <Fade in>
+            <li key={comment.id}>
+            <p>{comment.comment}</p>
+            <p> -- {comment.author}, {comment.date}</p>
+            </li>
+         </Fade>
+         ))
+         } 
+         </Stagger>
+      </ul>
+   )
+
    if(loading) {
       return <Loader />
    }
 
-  return (
+   return (
    <>
      <div className='container'>
       <div className='row'>
@@ -55,7 +73,7 @@ const Dishdetail = ({ dish }) => {
             { renderDish(dish) }
          </div> 
          <div className='col-md-5 m-1'>
-            <CommentForm dishId={dish.id} />
+            <CommentForm renderComment={renderComment}/>
          </div>
       </div> 
      </div>

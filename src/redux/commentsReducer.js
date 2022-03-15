@@ -1,17 +1,15 @@
 import { COMMENTS } from '../mocks/comments';
-import { ADD_COMMENT } from './types';
+import { ADD_COMMENT, FETCH_COMMENTS } from './types';
 
 export const commentsReducer = (state = COMMENTS, { dishId, rating, author, comment, type}) => {
 
   switch (type) {
      case ADD_COMMENT: 
      return [...state, {
-        id: state.length,
         dishId,
         rating,
         comment,
         author,
-        date: new Date().toISOString()
      }
     ];
 
@@ -19,3 +17,13 @@ export const commentsReducer = (state = COMMENTS, { dishId, rating, author, comm
         return state;
   }
 }
+
+
+export const reducer = (state = { comments: [], fetchedComments: []}, action) => {
+   switch (action.type) {
+     case FETCH_COMMENTS:
+       return {...state, fetchedComments: action.payload}  
+     default:
+       return state;
+   }
+ }

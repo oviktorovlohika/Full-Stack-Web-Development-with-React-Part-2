@@ -17,7 +17,7 @@ function ChosenDish(props) {
    const dishId = dishes.filter((dish) => dish.id === parseInt(id))[0];
 
    return (
-      <Dishdetail dish={dishId} />
+      <Dishdetail dish={dishId} comments={props.comments} />
    )
 }
 

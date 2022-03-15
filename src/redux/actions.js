@@ -15,13 +15,45 @@ import {
 } from "./types";
 import { baseUrl } from "../mocks/baseUrl";
 
-export const addComments = (dishId, rating, author, comment) => ({
+export const addComment = (comment) => ({
    type: ADD_COMMENT,
-   dishId,
-   rating,
-   author,
-   comment
+   payload: comment
 });
+
+export const postComment = (dishId, rating, author, comment) => (dispatch) => {
+
+   const newComment = {
+       dishId: dishId,
+       rating: rating,
+       author: author,
+       comment: comment
+   };
+   newComment.date = new Date().toISOString();
+   
+   return fetch(baseUrl + 'comments', {
+       method: "POST",
+       body: JSON.stringify(newComment),
+       headers: {
+         "Content-Type": "application/json"
+       },
+       credentials: "same-origin"
+   })
+   .then(response => {
+       if (response.ok) {
+         return response;
+       } else {
+         var error = new Error('Error ' + response.status + ': ' + response.statusText);
+         error.response = response;
+         throw error;
+       }
+     },
+     error => {
+           throw error;
+     })
+   .then(response => response.json())
+   .then(response => dispatch(addComment(response)))
+   .catch(error =>  { console.log('post comments', error.message); alert('Your comment could not be posted\nError: '+error.message); });
+};
 
 export const dishesLoading = () => ({
    type: DISHES_LOADING
@@ -72,7 +104,7 @@ export const postFeedback = (firstname, lastname, telnum) => (dispatch) => {
        lastname,
        telnum,
    };
-   
+
       return fetch(baseUrl + 'feedback', {
        method: "POST",
        body: JSON.stringify(newFeedback),
@@ -138,7 +170,6 @@ export const fetchPromos = () => (dispatch) => {
    .then(promos => dispatch({type: FETCH_PROMOS, payload: promos}))
    .catch(error => dispatch(promosFailed(error.message)));
 };
-
 export const fetchComments = () => (dispatch) => {    
    return fetch(baseUrl + 'comments')
    .then(response => {
@@ -159,6 +190,8 @@ export const fetchComments = () => (dispatch) => {
    .catch(error => dispatch(promosFailed(error.message)));
 };
 
+
+
 export function fetchLeaders() {
    return async dispatch => {
       dispatch(showLoader())
@@ -168,6 +201,20 @@ export function fetchLeaders() {
 
       setTimeout(() => {
          dispatch({type: FETCH_LEADERS, payload: json})
+      dispatch(hideLoader())
+      }, 500);
+   }
+}
+
+export function addComments() {
+   return async dispatch => {
+      dispatch(showLoader())
+
+      const response = await fetch(baseUrl + 'comments')
+      const json = await response.json()
+
+      setTimeout(() => {
+         dispatch({type: FETCH_COMMENTS, payload: json})
       dispatch(hideLoader())
       }, 500);
    }

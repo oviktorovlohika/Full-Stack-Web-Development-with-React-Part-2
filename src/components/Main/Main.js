@@ -1,13 +1,14 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { 
-  addComments, 
+  postComment, 
   fetchPosts, 
   fetchComments, 
   fetchDishes, 
   fetchLeaders, 
   fetchPromos,
-  postFeedback
+  postFeedback,
+  addComments
 } from '../../redux/actions';
 import { actions } from 'react-redux-form';
 import { useEffect } from 'react';
@@ -28,11 +29,13 @@ function Main(props) {
   const leaders = useSelector(state => state.leaders.fetchedLeaders);
   const dishes = useSelector(state => state.posts.fetchedPosts);
   const promotions = useSelector(state => state.promotions.fetchedPromos);
+   const comments = useSelector(state => state.reducer.fetchedComments);
 
   useEffect(() => {
     dispatch(fetchLeaders());
     dispatch(fetchPosts());
     dispatch(fetchPromos());
+    dispatch(addComments());
  },[dispatch]);
 
  const filteredDish = dishes.filter((dish) => dish.featured)[0];
@@ -61,7 +64,7 @@ function Main(props) {
             <Route exact path="/about" element={
             <About leaders={props.leaders} fetchLeaders={props.fetchLeaders}/>}/>
             <Route exact path="/contact" element={ <Contact resetFeedbackForm={props.resetFeedbackForm} postFeedback={props.postFeedback}/>}/>
-            <Route path='/menu/:id' element={<ChosenDish fetchDishes={props.fetchDishes} /> } />
+            <Route path='/menu/:id' element={<ChosenDish fetchDishes={props.fetchDishes} comments={comments}/> } />
           </Routes>
         </CSSTransition>
         </SwitchTransition>
@@ -81,11 +84,12 @@ function mapStateToProps(state) {
     fetchDishes,
     fetchComments,
     fetchLeaders,
+    addComments,
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  addComments,
+  postComment,
   postFeedback,
   resetFeedbackForm: () => {dispatch(actions.reset('feedback'))},
 })
